@@ -13,13 +13,10 @@
     @if ($method != 'create')
         <input type="hidden" name="_method" value="PUT">
     @endif
-
-    <div class="my-3">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {{ $slot }}
-        </div>
+    <div class="">
+        {{ $slot }}
     </div>
 
-    <x-input-btn :type="'submit'" :color="'success'" :id="'submit'">Submit </x-input-btn>
-    <x-input-btn :type="'reset'" :color="'warning'" :id="'reset'">Reset </x-input-btn>
+    <x-input-btn :type="'submit'" :title="'Submit'" :color="'info'" />
+    <x-input-btn :type="'reset'" :title="'Reset'" :color="'warning'" />
 </form>

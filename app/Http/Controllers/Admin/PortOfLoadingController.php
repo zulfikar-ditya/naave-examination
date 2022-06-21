@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PortOfLoading as model;
 use Illuminate\Http\Request;
 
 class PortOfLoadingController extends Controller
 {
+
+    public string $folder = 'port-of-loading';
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +17,8 @@ class PortOfLoadingController extends Controller
      */
     public function index()
     {
-        //
+        $model = model::paginate(20);
+        return view('pages.'.$this->folder.'.index', compact('model'));
     }
 
     /**
@@ -24,7 +28,8 @@ class PortOfLoadingController extends Controller
      */
     public function create()
     {
-        //
+        $model = [];
+        return view('pages.'.$this->folder.'.create', compact('model'));
     }
 
     /**
@@ -35,7 +40,15 @@ class PortOfLoadingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $model = new model();
+        $this->validate($request, $model->rules());
+        $model->loadModel($request->all());
+        try {
+            $model->save();
+        } catch (\Throwable $th) {
+            return redirect()->back()->with($this->get_set_message_crud(false, 'create', null, $th->getMessage()));
+        }
+        return redirect()->route($this->folder.'.index')->with($this->get_set_message_crud(true, 'create'));
     }
 
     /**
@@ -46,7 +59,8 @@ class PortOfLoadingController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = model::findOrFail($id);
+        return view('pages.'.$this->folder.'.show', compact('model'));
     }
 
     /**
@@ -57,7 +71,8 @@ class PortOfLoadingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = model::findOrFail($id);
+        return view('pages.'.$this->folder.'.edit', compact('model'));
     }
 
     /**
@@ -69,7 +84,17 @@ class PortOfLoadingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $new_model = new model();
+        $this->validate($request, $new_model->rules());
+
+        $model = model::findOrFail($id);
+        $model->loadModel($request->all());
+        try {
+            $model->save();
+        } catch (\Throwable $th) {
+            return redirect()->back()->with($this->get_set_message_crud(false, 'edit', null, $th->getMessage()));
+        }
+        return redirect()->route($this->folder.'.index')->with($this->get_set_message_crud(true, 'edit'));
     }
 
     /**
@@ -80,6 +105,13 @@ class PortOfLoadingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = model::findOrFail($id);
+
+        try {
+            $model->delete();
+        } catch (\Throwable $th) {
+            return redirect()->back()->with($this->get_set_message_crud(false, 'delete', null, $th->getMessage()));
+        }
+        return redirect()->route($this->folder.'.index')->with($this->get_set_message_crud(true, 'delete'));
     }
 }

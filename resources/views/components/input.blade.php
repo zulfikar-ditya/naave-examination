@@ -17,5 +17,5 @@
         {{Str::title($name)}}
         <span class="{{$required ? 'text-danger' : 'text-info'}}">*</span>
     </label>
-    <input type="{{$type}}" name="{{$name}}" id="{{$main_id}}" class="{{$main_class}} @error($name) is-invalid @enderror" {{$required ? 'required' : ''}} {{$autofocus ? 'autofocus' : ''}}>
+    <input type="{{$type}}" name="{{$name}}" id="{{$main_id}}" class="{{$main_class}} @error($name) is-invalid @enderror" {{$required ? 'required' : ''}} {{$autofocus ? 'autofocus' : ''}} value="{{$value}}">
 </div>

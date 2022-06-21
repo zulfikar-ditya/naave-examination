@@ -1,0 +1,1 @@
+{"version":3,"file":"css/style.css","mappings":"AAAA,cACI,gBACJ,CAEA,UACI,YACJ,C","sources":["webpack:///./resources/css/style.css"],"sourcesContent":[".min-h-screen {\r\n    min-height: 100vh;\r\n}\r\n\r\n.h-screen {\r\n    height: 100vh;\r\n}\r\n"],"names":[],"sourceRoot":""}

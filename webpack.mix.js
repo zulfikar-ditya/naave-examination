@@ -16,3 +16,4 @@ mix.js("resources/js/app.js", "public/js")
     .sourceMaps();
 
 mix.postCss("resources/css/style.css", "public/css");
+mix.js("resources/js/sweet-alert.js", "public/js");

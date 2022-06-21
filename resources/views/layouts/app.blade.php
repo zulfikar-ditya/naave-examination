@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,6 +22,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
+    @include('components.modal-alert')
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow fixed-top">
             <div class="container">
@@ -53,6 +55,9 @@
                                 </li>
                             @endif
                         @else
+                        <li class="nav-item">
+                            <a href="{{ route('port-of-loading.index') }}" class="nav-link">Port Of Loading</a>
+                        </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -77,5 +82,6 @@
             @yield('content')
         </main>
     </div>
+    @yield('js')
 </body>
 </html>

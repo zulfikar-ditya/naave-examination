@@ -4,7 +4,7 @@ namespace App\Http\Helpers;
 
 use Illuminate\Support\Facades\Storage;
 
-trait ControllerHelper {
+trait ControllerApiHelper {
     /**
      * response json 
      * 
