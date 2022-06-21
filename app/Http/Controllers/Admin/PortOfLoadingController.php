@@ -17,7 +17,7 @@ class PortOfLoadingController extends Controller
      */
     public function index()
     {
-        $model = model::paginate(20);
+        $model = model::latest()->paginate(20);
         return view('pages.'.$this->folder.'.index', compact('model'));
     }
 
