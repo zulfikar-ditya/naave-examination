@@ -28,11 +28,11 @@ class CompanyEmail extends Model
         ];
         if ($method == 'create') {
             $unique_validate = [
-                'email' => 'required|unique:companies,email'
+                'email' => 'required|unique:company_emails,email'
             ];
         } else {
             $unique_validate = [
-                'email' => 'required|unique:companies,email,'.$id
+                'email' => 'required|unique:company_emails,email,'.$id
             ];
         }
         return array_merge($validate, $unique_validate);

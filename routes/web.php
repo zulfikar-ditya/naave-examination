@@ -26,6 +26,8 @@ Route::middleware(['auth'])->namespace('App\Http\Controllers\Admin')->group(func
     Route::resources([
         'port-of-loading' => PortOfLoadingController::class,
         'port-of-discharge' => PortOfDischargeController::class,
+        'company' => CompanyController::class,
+        'company.company-email' => \Company\CompanyEmailController::class,
         'user' => UserController::class,
     ]);
 });

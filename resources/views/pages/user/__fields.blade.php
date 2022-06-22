@@ -5,10 +5,10 @@
             <x-input :type="'text'" :name="'name'" :value="$model ? $model->name : ''" :required="true" :autofocus="true"/>
         </div>
         <div class="col-md-6">
-            <x-input :type="'text'" :name="'email'" :value="$model ? $model->email : ''" :required="true" :autofocus="false"/>
+            <x-input :type="'email'" :name="'email'" :value="$model ? $model->email : ''" :required="true" :autofocus="false"/>
         </div>
         <div class="col-md-6">
-            <x-input :type="'text'" :name="'password'" :value="''" :required="$model ? false : true" :autofocus="false"/>
+            <x-input :type="'password'" :name="'password'" :value="''" :required="$model ? false : true" :autofocus="false"/>
         </div>
 
     </div>

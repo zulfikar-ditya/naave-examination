@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('company_emails', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Company::class)->constrained();
+            $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('email');
             $table->timestamps();
         });

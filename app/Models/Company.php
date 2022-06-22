@@ -30,12 +30,22 @@ class Company extends Model
     {
         $validate = [
             'name' => 'required|string|max:255',
-            'siup' => 'required|file|max:8000',
-            'npwp' => 'required|file|max:8000',
             'contact_person' => 'required|string|max:255',
             'address' => 'required|string|max:255',
         ];
-        return $validate;
+
+        if ($method == 'create') {
+            $unique_validate = [
+                'siup' => 'required|file|max:8000',
+                'npwp' => 'required|file|max:8000',
+            ];
+        } else {
+            $unique_validate = [
+                'siup' => 'nullable|file|max:8000',
+                'npwp' => 'nullable|file|max:8000',
+            ];
+        }
+        return array_merge($validate, $unique_validate);
     }
 
     public function loadModel($request, $method = 'create') {

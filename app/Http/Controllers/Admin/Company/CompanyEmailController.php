@@ -1,23 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Company;
 
 use App\Http\Controllers\Controller;
-use App\Models\Company as model;
+use App\Models\Company;
+use App\Models\CompanyEmail as model;
 use Illuminate\Http\Request;
 
-class CompanyController extends Controller
+class CompanyEmailController extends Controller
 {
-    public string $folder = 'company';
+    public string $folder = 'company.company-email';
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($company)
     {
-        $model = model::latest()->paginate(20);
-        return view('pages.'.$this->folder.'.index', compact('model'));
+        $company = Company::findOrFail($company);
+        $model = model::where('company_id', $company->id)->latest()->paginate(20);
+        return view('pages.'.$this->folder.'.index', compact('model', 'company'));
     }
 
     /**
@@ -25,10 +27,11 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($company)
     {
+        $company = Company::findOrFail($company);
         $model = [];
-        return view('pages.'.$this->folder.'.create', compact('model'));
+        return view('pages.'.$this->folder.'.create', compact('model', 'company'));
     }
 
     /**
@@ -37,24 +40,18 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $company)
     {
+        $company = Company::findOrFail($company);
         $model = new model();
         $this->validate($request, $model->rules());
         $model->loadModel($request->all());
-
-        if ($request->hasFile('siup')) {
-            $model->siup = $this->upload_file($request->file('siup'), 'company/siup');
-        }
-        if ($request->hasFile('npwp')) {
-            $model->npwp = $this->upload_file($request->file('npwp'), 'company/npwp');
-        }
         try {
             $model->save();
         } catch (\Throwable $th) {
             return redirect()->back()->with($this->get_set_message_crud(false, 'create', null, $th->getMessage()));
         }
-        return redirect()->route($this->folder.'.index')->with($this->get_set_message_crud(true, 'create'));
+        return redirect()->route($this->folder.'.index', $company)->with($this->get_set_message_crud(true, 'create'));
     }
 
     /**
@@ -63,10 +60,11 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($company, $id)
     {
+        $company = Company::findOrFail($company);
         $model = model::findOrFail($id);
-        return view('pages.'.$this->folder.'.show', compact('model'));
+        return view('pages.'.$this->folder.'.show', compact('model', 'company'));
     }
 
     /**
@@ -75,10 +73,11 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($company, $id)
     {
+        $company = Company::findOrFail($company);
         $model = model::findOrFail($id);
-        return view('pages.'.$this->folder.'.edit', compact('model'));
+        return view('pages.'.$this->folder.'.show', compact('model', 'company'));
     }
 
     /**
@@ -88,31 +87,20 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $company, $id)
     {
+        $company = Company::findOrFail($company);
         $new_model = new model();
-        $this->validate($request, $new_model->rules('update'));
+        $this->validate($request, $new_model->rules());
 
         $model = model::findOrFail($id);
-        $old_siup = $model->siup;
-        $old_npwp = $model->npwp;
         $model->loadModel($request->all());
-
-        if ($request->hasFile('siup')) {
-            $this->delete_file($old_siup);
-            $model->siup = $this->upload_file($request->file('siup'), 'company/siup');
-        }
-        if ($request->hasFile('npwp')) {
-            $this->delete_file($old_npwp);
-            $model->npwp = $this->upload_file($request->file('npwp'), 'company/npwp');
-        }
-
         try {
             $model->save();
         } catch (\Throwable $th) {
             return redirect()->back()->with($this->get_set_message_crud(false, 'edit', null, $th->getMessage()));
         }
-        return redirect()->route($this->folder.'.index')->with($this->get_set_message_crud(true, 'edit'));
+        return redirect()->route($this->folder.'.index', $company)->with($this->get_set_message_crud(true, 'edit'));
     }
 
     /**
@@ -121,15 +109,15 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($company, $id)
     {
+        $company = Company::findOrFail($company);
         $model = model::findOrFail($id);
-
         try {
             $model->delete();
         } catch (\Throwable $th) {
             return redirect()->back()->with($this->get_set_message_crud(false, 'delete', null, $th->getMessage()));
         }
-        return redirect()->route($this->folder.'.index')->with($this->get_set_message_crud(true, 'delete'));
+        return redirect()->route($this->folder.'.index', $company)->with($this->get_set_message_crud(true, 'delete'));
     }
 }

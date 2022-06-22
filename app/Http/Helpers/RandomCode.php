@@ -32,7 +32,7 @@ trait RandomCode
     public function company_code($name)
     {
         $new_name = explode(" ", $name);
-        return 'COM-'.strtolower($new_name[0]).$this->random_str();
+        return 'COM-'.strtolower($new_name[1]).$this->random_str();
     }
 
 }

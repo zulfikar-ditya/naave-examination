@@ -18,7 +18,7 @@ return new class extends Migration
     {
         Schema::create('company_friegths', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Company::class)->constrained();
+            $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(PortOfLoading::class)->constrained();
             $table->foreignIdFor(PortOfDischarge::class)->constrained();
             $table->string('freight');
