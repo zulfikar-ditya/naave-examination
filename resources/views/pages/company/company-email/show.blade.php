@@ -20,7 +20,7 @@
                 </tr>
                 <tr>
                     <td>Created At</td>
-                    <td>{{$model->cerated_at}}</td>
+                    <td>{{$model->created_at}}</td>
                 </tr>
                 <tr>
                     <td>Last Modified</td>

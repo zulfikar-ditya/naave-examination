@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\PortOfLoading;
+use App\Models\Port;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,7 +18,7 @@ class PortOfLoadingSeeder extends Seeder
         $arr = ['Adaut', 'Atapupu', 'Air Buaya', 'Ambalau', 'Air Bangis', 'Probolinggo', 'Agata', 'Amahai'];
 
         foreach ($arr as $key => $value) {
-            $model = new PortOfLoading();
+            $model = new Port();
             $model->name = $value;
             $model->save();
         }

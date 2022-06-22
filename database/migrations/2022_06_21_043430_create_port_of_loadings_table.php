@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('port_of_loadings', function (Blueprint $table) {
+        Schema::create('ports', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();

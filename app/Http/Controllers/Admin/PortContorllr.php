@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\PortOfLoading as model;
+use App\Models\Port as model;
 use Illuminate\Http\Request;
 
-class PortOfLoadingController extends Controller
+class PortContorllr extends Controller
 {
-
-    public string $folder = 'port-of-loading';
+    public string $folder = 'port';
     /**
      * Display a listing of the resource.
      *

@@ -1,23 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Company;
 
 use App\Http\Controllers\Controller;
-use App\Models\PortOfDischarge as model;
+use App\Models\Company;
+use App\Models\CompanyFriegth as model;
+use App\Models\Port;
 use Illuminate\Http\Request;
 
-class PortOfDischargeController extends Controller
+class CompanyFreightController extends Controller
 {
-    public string $folder = 'port-of-discharge';
+    public string $folder = 'company.company-freight';
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($company)
     {
-        $model = model::latest()->paginate(20);
-        return view('pages.'.$this->folder.'.index', compact('model'));
+        $company = Company::findOrFail($company);
+        $model = model::where('company_id', $company->id)->latest()->paginate(20);
+        return view('pages.'.$this->folder.'.index', compact('model', 'company'));
     }
 
     /**
@@ -25,10 +28,12 @@ class PortOfDischargeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($company)
     {
+        $company = Company::findOrFail($company);
+        $ports = Port::all();
         $model = [];
-        return view('pages.'.$this->folder.'.create', compact('model'));
+        return view('pages.'.$this->folder.'.create', compact('model', 'company', 'ports'));
     }
 
     /**
@@ -37,8 +42,9 @@ class PortOfDischargeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $company)
     {
+        $company = Company::findOrFail($company);
         $model = new model();
         $this->validate($request, $model->rules());
         $model->loadModel($request->all());
@@ -47,7 +53,7 @@ class PortOfDischargeController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with($this->get_set_message_crud(false, 'create', null, $th->getMessage()));
         }
-        return redirect()->route($this->folder.'.index')->with($this->get_set_message_crud(true, 'create'));
+        return redirect()->route($this->folder.'.index', $company)->with($this->get_set_message_crud(true, 'create'));
     }
 
     /**
@@ -56,10 +62,11 @@ class PortOfDischargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($company, $id)
     {
+        $company = Company::findOrFail($company);
         $model = model::findOrFail($id);
-        return view('pages.'.$this->folder.'.show', compact('model'));
+        return view('pages.'.$this->folder.'.show', compact('model', 'company'));
     }
 
     /**
@@ -68,10 +75,12 @@ class PortOfDischargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($company, $id)
     {
+        $company = Company::findOrFail($company);
         $model = model::findOrFail($id);
-        return view('pages.'.$this->folder.'.edit', compact('model'));
+        $ports = Port::all();
+        return view('pages.'.$this->folder.'.show', compact('model', 'company', 'ports'));
     }
 
     /**
@@ -81,8 +90,9 @@ class PortOfDischargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $company, $id)
     {
+        $company = Company::findOrFail($company);
         $new_model = new model();
         $this->validate($request, $new_model->rules());
 
@@ -93,7 +103,7 @@ class PortOfDischargeController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with($this->get_set_message_crud(false, 'edit', null, $th->getMessage()));
         }
-        return redirect()->route($this->folder.'.index')->with($this->get_set_message_crud(true, 'edit'));
+        return redirect()->route($this->folder.'.index', $company)->with($this->get_set_message_crud(true, 'edit'));
     }
 
     /**
@@ -102,15 +112,15 @@ class PortOfDischargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($company, $id)
     {
+        $company = Company::findOrFail($company);
         $model = model::findOrFail($id);
-
         try {
             $model->delete();
         } catch (\Throwable $th) {
             return redirect()->back()->with($this->get_set_message_crud(false, 'delete', null, $th->getMessage()));
         }
-        return redirect()->route($this->folder.'.index')->with($this->get_set_message_crud(true, 'delete'));
+        return redirect()->route($this->folder.'.index', $company)->with($this->get_set_message_crud(true, 'delete'));
     }
 }

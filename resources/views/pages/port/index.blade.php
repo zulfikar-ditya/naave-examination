@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    $title = 'Port of discharge';
+    $title = 'Port';
 
     $data_tables = ['name']
 @endphp
@@ -10,7 +10,7 @@
 
 @section('content')
     <x-main-card :title="$title">
-        <x-btn-link :link="route('port-of-discharge.create')" :color="'success'" :value="'Create'"/>
+        <x-btn-link :link="route('port.create')" :color="'success'" :value="'Create'"/>
 
         <table class="table table-responsive">
             <thead>
@@ -27,10 +27,10 @@
                     @endforeach
                     <td>
                         <div class="">
-                            <x-btn-link :link="route('port-of-discharge.show', $item)" :color="'info'" :value="'Detail'"/>
-                            <x-btn-link :link="route('port-of-discharge.edit', $item)" :color="'warning'" :value="'Edit'"/>
+                            <x-btn-link :link="route('port.show', $item)" :color="'info'" :value="'Detail'"/>
+                            <x-btn-link :link="route('port.edit', $item)" :color="'warning'" :value="'Edit'"/>
                             <x-btn-link :link="'#'" :color="'danger'" :value="'Delete'" :id="'btn-delete-'.$item->id"/>
-                            <form action="{{route('port-of-discharge.destroy', $item)}}" id="form-delete-{{$item->id}}" method="POST">
+                            <form action="{{route('port.destroy', $item)}}" id="form-delete-{{$item->id}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                             </form>

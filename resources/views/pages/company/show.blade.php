@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <td>Created At</td>
-                    <td>{{$model->cerated_at}}</td>
+                    <td>{{$model->created_at}}</td>
                 </tr>
                 <tr>
                     <td>Last Modified</td>
@@ -59,6 +59,7 @@
 
         <x-btn-link :link="route('company.index')" :color="'success'" :value="'Back'"/>
         <x-btn-link :link="route('company.company-email.index', $model)" :color="'primary'" :value="'Company Email'"/>
+        <x-btn-link :link="route('company.company-freight.index', $model)" :color="'primary'" :value="'Company Freight'"/>
         <x-btn-link :link="route('company.edit', $model)" :color="'info'" :value="'Edit'"/>
         <x-btn-link :link="'#'" :color="'danger'" :value="'Delete'" :id="'btn-delete-'.$model->id"/>
         <form action="{{route('company.destroy', $model)}}" id="form-delete-{{$model->id}}" method="POST">

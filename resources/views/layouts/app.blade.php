@@ -60,10 +60,7 @@
                                 <a href="{{ route('company.index') }}" class="nav-link">Company</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('port-of-loading.index') }}" class="nav-link">Port Of Loading</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('port-of-discharge.index') }}" class="nav-link">Port Of Discharge</a>
+                                <a href="{{ route('port.index') }}" class="nav-link">Port</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('user.index') }}" class="nav-link">User</a>

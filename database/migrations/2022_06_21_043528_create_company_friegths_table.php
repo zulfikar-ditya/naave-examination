@@ -1,8 +1,7 @@
 <?php
 
 use App\Models\Company;
-use App\Models\PortOfDischarge;
-use App\Models\PortOfLoading;
+use App\Models\Port;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,8 +18,8 @@ return new class extends Migration
         Schema::create('company_friegths', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(PortOfLoading::class)->constrained();
-            $table->foreignIdFor(PortOfDischarge::class)->constrained();
+            $table->foreignId('port_of_loading_id')->constrained('ports');
+            $table->foreignId('port_of_discharge_id')->constrained('ports');
             $table->string('freight');
             $table->timestamps();
         });

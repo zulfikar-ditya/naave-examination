@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @php
-    $title = 'Edit Port of discharge';
+    $title = 'Edit Company Freight - '.$company->name. ' - '.$company->code;
 @endphp
 
 @section('title', Str::title($title))
 
 @section('content')
     <x-main-card :title="$title">
-        @include('pages.port-of-discharge.__fields')
+        @include('pages.company.company-freight.__fields')
     </x-main-card>
 @endsection

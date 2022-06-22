@@ -24,10 +24,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth'])->namespace('App\Http\Controllers\Admin')->group(function () {
     Route::resources([
-        'port-of-loading' => PortOfLoadingController::class,
-        'port-of-discharge' => PortOfDischargeController::class,
+        'port' => PortContorllr::class,
         'company' => CompanyController::class,
         'company.company-email' => \Company\CompanyEmailController::class,
+        'company.company-freight' => \Company\CompanyFreightController::class,
         'user' => UserController::class,
     ]);
 });

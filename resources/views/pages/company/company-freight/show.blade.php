@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    $title = 'Show Port of Loading';
+    $title = 'Show Company Freight - '.$company->name. ' - '.$company->code;
 @endphp
 
 @section('title', Str::title($title))
@@ -15,24 +15,32 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Name</td>
-                    <td>{{$model->name}}</td>
+                    <td>Freight</td>
+                    <td>{{$model->freight}}</td>
+                </tr>
+                <tr>
+                    <td>Port of Loading</td>
+                    <td>{{$model->port_of_loading->name}}</td>
+                </tr>
+                <tr>
+                    <td>Port of Discharge</td>
+                    <td>{{$model->port_of_discharge->name}}</td>
                 </tr>
                 <tr>
                     <td>Created At</td>
-                    <td>{{$model->cerated_at->toDateTimeString()}}</td>
+                    <td>{{$model->created_at}}</td>
                 </tr>
                 <tr>
                     <td>Last Modified</td>
-                    <td>{{$model->updated_at->toDateTimeString()}}</td>
+                    <td>{{$model->updated_at}}</td>
                 </tr>
             </tbody>
         </table>
 
-        <x-btn-link :link="route('port-of-loading.index')" :color="'success'" :value="'Back'"/>
-        <x-btn-link :link="route('port-of-loading.edit', $model)" :color="'info'" :value="'Edit'"/>
+        <x-btn-link :link="route('company.company-freight.index', ['company' => $company, 'company_freight' => $model])" :color="'success'" :value="'Back'"/>
+        <x-btn-link :link="route('company.company-freight.edit', ['company' => $company, 'company_freight' => $model])" :color="'info'" :value="'Edit'"/>
         <x-btn-link :link="'#'" :color="'danger'" :value="'Delete'" :id="'btn-delete-'.$model->id"/>
-        <form action="{{route('port-of-loading.destroy', $model)}}" id="form-delete-{{$model->id}}" method="POST">
+        <form action="{{route('company.company-freight.destroy', ['company' => $company, 'company_freight' => $model])}}" id="form-delete-{{$model->id}}" method="POST">
             @csrf
             @method('DELETE')
         </form>
