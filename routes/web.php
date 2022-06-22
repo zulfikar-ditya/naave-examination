@@ -26,5 +26,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth'])->namespace('App\Http\Controllers\Admin')->group(function () {
     Route::resources([
         'port-of-loading' => PortOfLoadingController::class,
+        'port-of-discharge' => PortOfDischargeController::class,
     ]);
 });
