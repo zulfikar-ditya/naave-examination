@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User as model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -42,6 +43,7 @@ class UserController extends Controller
         $model = new model();
         $this->validate($request, $model->rules());
         $model->loadModel($request->all());
+        $model->password = Hash::make($request->password);
         try {
             $model->save();
         } catch (\Throwable $th) {
@@ -84,10 +86,11 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $new_model = new model();
-        $this->validate($request, $new_model->rules());
+        $this->validate($request, $new_model->rules('update', $id));
 
         $model = model::findOrFail($id);
         $model->loadModel($request->all());
+        if ($request->password) $model->password = Hash::make($request->password);
         try {
             $model->save();
         } catch (\Throwable $th) {

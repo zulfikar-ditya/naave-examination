@@ -18,6 +18,14 @@
                     <td>Name</td>
                     <td>{{$model->name}}</td>
                 </tr>
+                <tr>
+                    <td>Created At</td>
+                    <td>{{$model->cerated_at->toDateTimeString()}}</td>
+                </tr>
+                <tr>
+                    <td>Last Modified</td>
+                    <td>{{$model->updated_at->toDateTimeString()}}</td>
+                </tr>
             </tbody>
         </table>
 

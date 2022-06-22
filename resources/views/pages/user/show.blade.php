@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    $title = 'Show Port of Loading';
+    $title = 'Show User';
 @endphp
 
 @section('title', Str::title($title))
@@ -19,6 +19,10 @@
                     <td>{{$model->name}}</td>
                 </tr>
                 <tr>
+                    <td>Email</td>
+                    <td>{{$model->email}}</td>
+                </tr>
+                <tr>
                     <td>Created At</td>
                     <td>{{$model->cerated_at->toDateTimeString()}}</td>
                 </tr>
@@ -29,10 +33,10 @@
             </tbody>
         </table>
 
-        <x-btn-link :link="route('port-of-loading.index')" :color="'success'" :value="'Back'"/>
-        <x-btn-link :link="route('port-of-loading.edit', $model)" :color="'info'" :value="'Edit'"/>
+        <x-btn-link :link="route('user.index')" :color="'success'" :value="'Back'"/>
+        <x-btn-link :link="route('user.edit', $model)" :color="'info'" :value="'Edit'"/>
         <x-btn-link :link="'#'" :color="'danger'" :value="'Delete'" :id="'btn-delete-'.$model->id"/>
-        <form action="{{route('port-of-loading.destroy', $model)}}" id="form-delete-{{$model->id}}" method="POST">
+        <form action="{{route('user.destroy', $model)}}" id="form-delete-{{$model->id}}" method="POST">
             @csrf
             @method('DELETE')
         </form>

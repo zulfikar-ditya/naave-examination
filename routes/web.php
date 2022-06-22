@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\PortOfLoadingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +26,6 @@ Route::middleware(['auth'])->namespace('App\Http\Controllers\Admin')->group(func
     Route::resources([
         'port-of-loading' => PortOfLoadingController::class,
         'port-of-discharge' => PortOfDischargeController::class,
+        'user' => UserController::class,
     ]);
 });
