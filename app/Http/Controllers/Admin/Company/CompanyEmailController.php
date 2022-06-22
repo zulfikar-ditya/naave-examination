@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CompanyEmail as model;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Datatables;
+
 
 class CompanyEmailController extends Controller
 {
@@ -15,11 +17,21 @@ class CompanyEmailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($company)
+    public function index(Request $request, $company)
     {
         $company = Company::findOrFail($company);
-        $model = model::where('company_id', $company->id)->latest()->paginate(20);
-        return view('pages.'.$this->folder.'.index', compact('model', 'company'));
+        if ($request->ajax()) {
+            $data = model::where('company_id', $company->id)->get();
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row) { 
+                        $btn = '<a href="'.route($this->folder.'.show', ['company_email' => $row, 'company' => $row->company_id]).'" class="edit btn btn-primary btn-sm">View</a>'; 
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('pages.'.$this->folder.'.index', compact('company'));
     }
 
     /**

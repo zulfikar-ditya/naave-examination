@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Company as model;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Datatables;
 
 class CompanyController extends Controller
 {
@@ -14,10 +15,20 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $model = model::latest()->paginate(20);
-        return view('pages.'.$this->folder.'.index', compact('model'));
+        if ($request->ajax()) {
+            $data = model::select('*');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row) { 
+                        $btn = '<a href="'.route($this->folder.'.show', $row).'" class="edit btn btn-primary btn-sm">View</a>'; 
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('pages.'.$this->folder.'.index',);
     }
 
     /**
