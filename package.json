@@ -21,6 +21,8 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "datatables.net-bs4": "^1.12.1",
+        "datatables.net-buttons-bs4": "^2.2.3",
         "sweetalert": "^2.1.2"
     }
 }
